@@ -9,14 +9,59 @@ import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 
+/**
+ * Measures the time taken for short tasks and the count of these tasks.
+ *
+ * @param name The base metric name
+ * @param tags MUST be an even number of arguments representing key/value pairs of tags.
+ * @return A new or existing timer.
+ */
 fun MeterRegistry.coTimer(name: String, vararg tags: String): CoroutineTimer =
         CoroutineTimer(timer(name, * tags), this.config().clock())
 
+/**
+ * Measures the time taken for short tasks and the count of these tasks.
+ *
+ * @param name The base metric name
+ * @param tags Sequence of dimensions for breaking down the name.
+ * @return A new or existing timer.
+ */
 fun MeterRegistry.coTimer(name: String, tags: Iterable<Tag>): CoroutineTimer =
         CoroutineTimer(timer(name, tags), this.config().clock())
 
 class CoroutineTimer internal constructor(timer: Timer, private val clock: Clock) : Timer by timer {
     companion object {
+        /**
+         * @param tags Tags to add to the eventual timer.
+         * @param publishPercentiles Produces an additional time series for each requested percentile. This percentile
+         * is computed locally, and so can't be aggregated with percentiles computed across other
+         * dimensions (e.g. in a different instance). Use [publishPercentileHistogram]
+         * to publish a histogram that can be used to generate aggregable percentile approximations.
+         * @param percentilePrecision Determines the number of digits of precision to maintain on the dynamic range histogram used to compute
+         * percentile approximations. The higher the degrees of precision, the more accurate the approximation is at the
+         * cost of more memory.
+         * @param publishPercentileHistogram Adds histogram buckets used to generate aggregable percentile approximations in monitoring
+         * systems that have query facilities to do so (e.g. Prometheus' `histogram_quantile`,
+         * Atlas' `percentiles`.
+         * @param sla Publish at a minimum a histogram containing your defined SLA boundaries. When used in conjunction with
+         * [publishPercentileHistogram], the boundaries defined here are included alongside
+         * other buckets used to generate aggregable percentile approximations.
+         * @param minimumExpectedValue Sets the minimum value that this timer is expected to observe. Sets a lower bound
+         * on histogram buckets that are shipped to monitoring systems that support aggregable percentile approximations.
+         * @param maximumExpectedValue Sets the maximum value that this timer is expected to observe. Sets an upper bound
+         * on histogram buckets that are shipped to monitoring systems that support aggregable percentile approximations.
+         * @param distributionStatisticExpiry Statistics emanating from a timer like max, percentiles, and histogram counts decay over time to
+         * give greater weight to recent samples (exception: histogram counts are cumulative for those systems that expect cumulative
+         * histogram buckets). Samples are accumulated to such statistics in ring buffers which rotate after
+         * this expiry, with a buffer length of [distributionStatisticBufferLength]
+         * @param distributionStatisticBufferLength Statistics emanating from a timer like max, percentiles, and histogram counts decay over time to
+         * give greater weight to recent samples (exception: histogram counts are cumulative for those systems that expect cumulative
+         * histogram buckets). Samples are accumulated to such statistics in ring buffers which rotate after
+         * [distributionStatisticExpiry], with this buffer length.
+         * @param pauseDetector Sets the pause detector implementation to use for this timer. Can also be configured on a registry-level with
+         * [MeterRegistry.pauseDetector]
+         * @param description Description text of the eventual timer.
+         */
         operator fun invoke(
                 name: String,
                 meterRegistry: MeterRegistry,
@@ -50,6 +95,14 @@ class CoroutineTimer internal constructor(timer: Timer, private val clock: Clock
         }
     }
 
+    /**
+     * Executes the suspend function [f] and records the time taken.
+     *
+     * @param f   Suspend function to execute and measure the execution time.
+     * @param <T> The return type of [f]
+     * @return The return value of [f].
+     * @throws Exception Any exception bubbling up from the callable.
+     */
     suspend fun <T> record(f: suspend () -> T): T {
         val s = clock.monotonicTime()
         try {
