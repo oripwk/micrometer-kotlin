@@ -10,8 +10,6 @@ Kotlin support for micrometer.io
     val result = myTimer.record {
         GlobalScope.async { 42 }.await()
     }
-
-    println(result)
 ```
 
 ## Comprehensive `Timer` building support
