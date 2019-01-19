@@ -10,17 +10,6 @@ repositories {
     jcenter()
 }
 
-bintray {
-    user = 'orip'
-    key = '???'
-    pkg {
-        repo = 'maven'
-        name = 'micrometer-kotlin'
-        userOrg = 'ori'
-        configurations = ['archives']
-    }
-}
-
 version = '0.1'
 group = 'com.oripwk'
 archivesBaseName = 'micrometer-kotlin'
@@ -72,27 +61,6 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-}
-
-publishing {
-    publications {
-        myLibrary(MavenPublication) {
-            from components.java
-            groupId 'com.oripwk'
-            artifactId 'micrometer-kotlin'
-            version '0.1'
-        }
-    }
-
-    repositories {
-        maven {
-            url "https://ori.bintray.com/maven"
-            credentials {
-                username 'orip'
-                password '???'
-            }
-        }
     }
 }
 
