@@ -1,13 +1,13 @@
-[ ![Download](https://api.bintray.com/packages/ori/maven/micrometer-kotlin/images/download.svg?version=0.1) ](https://bintray.com/ori/maven/micrometer-kotlin/0.1/link) [ ![Download](https://api.bintray.com/packages/ori/maven/micrometer-kotlin/images/download.svg?version=0.1.kotlin12) ](https://bintray.com/ori/maven/micrometer-kotlin/0.1.kotlin12/link)
-
 # Kotlin for Micrometer
+[![Apache License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Maven Central](https://img.shields.io/maven-central/v/com.oripwk/micrometer-kotlin.svg)](https://search.maven.org/artifact/com.oripwk/micrometer-kotlin/0.1/jar)
+
 Kotlin support for [micrometer.io](micrometer.io).
 
 ## Install
 
 ```gradle
 repositories {
-    maven { url "https://ori.bintray.com/maven" }
+    mavenCentral() // jcenter()
 }
 ```
 
