@@ -109,5 +109,13 @@ class CoroutineTimer internal constructor(timer: Timer, private val clock: Clock
             record(e - s, TimeUnit.NANOSECONDS)
         }
     }
+
+    /**
+     * Wrap a suspend function so that it is timed when invoked.
+     *
+     * @param f The suspend function to time when it is invoked.
+     * @return The wrapped suspend function.
+     */
+    fun <T> wrap(f: suspend () -> T): suspend () -> T = { record(f) }
 }
 

@@ -80,5 +80,18 @@ object Spec : Spek({
                 assertEquals(setOf(Tag.of("key", "value"), Tag.of("phi", "1")), actualPercentile.id.tags.toSet())
             }
         }
+
+        it("should record time correctly") {
+            val timer = registry.coTimer("timer")
+            runBlocking {
+                val wrapped = timer.wrap { GlobalScope.async { 42 }.await() }
+                val result = wrapped()
+                assertEquals(42, result)
+                val actual = registry.meters.single() as Timer
+                assertEquals(1, actual.count())
+                assertEquals(0, actual.totalTime(TimeUnit.NANOSECONDS).toLong())
+            }
+        }
+
     }
 })

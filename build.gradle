@@ -9,10 +9,21 @@ repositories {
 version = '1.0'
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'
     implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.1.0'
     implementation group: 'io.micrometer', name: 'micrometer-core', version: '1.1.2'
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+
+    testImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-test'
+    testImplementation group: 'org.spekframework.spek2', name: 'spek-dsl-jvm', version: '2.0.0-rc.1' exclude group: 'org.jetbrains.kotlin'
+
+    testRuntimeOnly group: 'org.spekframework.spek2', name: 'spek-runner-junit5', version: '2.0.0-rc.1'
+    testRuntimeOnly group: 'org.jetbrains.kotlin', name: 'kotlin-reflect'
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines 'spek2'
+    }
 }
 
 compileKotlin {
