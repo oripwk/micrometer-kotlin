@@ -1,9 +1,10 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.11'
-    id 'com.jfrog.bintray' version '1.8.4'
     id 'org.jetbrains.dokka' version '0.9.17'
-    id 'maven-publish'
 }
+
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 repositories {
     jcenter()
@@ -22,6 +23,7 @@ bintray {
 
 version = '0.1'
 group = 'com.oripwk'
+archivesBaseName = 'micrometer-kotlin'
 
 dependencies {
     implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'
@@ -85,10 +87,58 @@ publishing {
 
     repositories {
         maven {
-            url  "https://ori.bintray.com/maven"
+            url "https://ori.bintray.com/maven"
             credentials {
                 username 'orip'
                 password '???'
+            }
+        }
+    }
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'micrometer-kotlin'
+                packaging 'jar'
+                description 'Kotlin support for micrometer.io'
+                url 'https://github.com/oripwk/micrometer-kotlin'
+
+                scm {
+                    connection 'scm:git:git://github.com/oripwk/micrometer-kotlin.git'
+                    developerConnection 'scm:git:git@github.com:oripwk/micrometer-kotlin.git'
+                    url 'https://github.com/oripwk/micrometer-kotlin'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'oripwk'
+                        name 'Ori Popowski'
+                        email 'ori.psk@gmail.com'
+                    }
+                }
             }
         }
     }
