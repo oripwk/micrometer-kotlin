@@ -20,7 +20,7 @@ bintray {
 }
 
 version = '0.1'
-group = 'io.oripwk'
+group = 'com.oripwk'
 
 dependencies {
     implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'
@@ -56,7 +56,7 @@ publishing {
     publications {
         myLibrary(MavenPublication) {
             from components.java
-            groupId 'io.oripwk'
+            groupId 'com.oripwk'
             artifactId 'micrometer-kotlin'
             version '0.1'
         }

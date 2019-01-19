@@ -13,9 +13,9 @@ repositories {
 
 ```gradle
 dependencies {
-    implementation group: 'io.oripwk', name: 'micrometer-kotlin', version: '0.1'
+    implementation group: 'com.oripwk', name: 'micrometer-kotlin', version: '0.1'
     // OR
-    implementation group: 'io.oripwk', name: 'micrometer-kotlin', version: '0.1.kotlin12'
+    implementation group: 'com.oripwk', name: 'micrometer-kotlin', version: '0.1.kotlin12'
 }
 ```
 
