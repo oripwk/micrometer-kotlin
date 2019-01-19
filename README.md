@@ -9,18 +9,10 @@ repositories {
 }
 ```
 
-### Kotlin 1.3
-
 ```gradle
 dependencies {
     implementation group: 'io.oripwk', name: 'micrometer-kotlin', version: '0.1'
-}
-```
-
-### Kotlin 1.2
-
-```gradle
-dependencies {
+    // OR
     implementation group: 'io.oripwk', name: 'micrometer-kotlin', version: '0.1.kotlin12'
 }
 ```
