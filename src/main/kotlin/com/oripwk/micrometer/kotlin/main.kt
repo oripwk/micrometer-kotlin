@@ -1,4 +1,4 @@
-package io.oripwk.micrometer.kotlin
+package com.oripwk.micrometer.kotlin
 
 import io.micrometer.core.instrument.Clock
 import io.micrometer.core.instrument.MeterRegistry
