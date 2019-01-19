@@ -1,5 +1,5 @@
 # Kotlin for Micrometer
-Kotlin support for micrometer.io
+Kotlin support for [micrometer.io](micrometer.io).
 
 ## Install
 
