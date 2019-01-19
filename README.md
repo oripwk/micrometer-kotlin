@@ -1,3 +1,5 @@
+[ ![Download](https://api.bintray.com/packages/ori/maven/micrometer-kotlin/images/download.svg?version=0.1) ](https://bintray.com/ori/maven/micrometer-kotlin/0.1/link) [ ![Download](https://api.bintray.com/packages/ori/maven/micrometer-kotlin/images/download.svg?version=0.1.kotlin12) ](https://bintray.com/ori/maven/micrometer-kotlin/0.1.kotlin12/link)
+
 # Kotlin for Micrometer
 Kotlin support for [micrometer.io](micrometer.io).
 
