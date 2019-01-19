@@ -95,8 +95,8 @@ class CoroutineTimer internal constructor(timer: Timer, private val clock: Clock
     /**
      * Executes the suspend function [f] and records the time taken.
      *
-     * @param f   Suspend function to execute and measure the execution time.
-     * @param <T> The return type of [f]
+     * @param f Suspend function to execute and measure the execution time.
+     * @param T The return type of [f]
      * @return The return value of [f].
      * @throws Exception Any exception bubbling up from the callable.
      */
@@ -114,6 +114,7 @@ class CoroutineTimer internal constructor(timer: Timer, private val clock: Clock
      * Wrap a suspend function so that it is timed when invoked.
      *
      * @param f The suspend function to time when it is invoked.
+     * @param T The return type of [f]
      * @return The wrapped suspend function.
      */
     fun <T> wrap(f: suspend () -> T): suspend () -> T = { record(f) }
