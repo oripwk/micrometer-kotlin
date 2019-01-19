@@ -1,6 +1,22 @@
 # Kotlin for Micrometer
 Kotlin support for micrometer.io
 
+## Install
+
+```gradle
+repositories {
+    maven { url "https://ori.bintray.com/maven" }
+}
+```
+
+```gradle
+dependencies {
+    implementation group: 'io.oripwk', name: 'micrometer-kotlin', version: '0.1'
+    // OR
+    implementation group: 'io.oripwk', name: 'micrometer-kotlin', version: '0.1.kotlin12'
+}
+```
+
 ## Easily create timers that can receive suspend functions
 
 ```kotlin
