@@ -1,12 +1,26 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.2.71'
+    id 'com.jfrog.bintray' version '1.8.4'
+    id 'maven-publish'
 }
 
 repositories {
     jcenter()
 }
 
-version = '1.0.kotlin12'
+bintray {
+    user = 'orip'
+    key = '???'
+    pkg {
+        repo = 'maven'
+        name = 'micrometer-kotlin'
+        userOrg = 'ori'
+        configurations = ['archives']
+    }
+}
+
+version = '0.1.kotlin12'
+group = 'io.oripwk'
 
 dependencies {
     implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'
@@ -44,3 +58,23 @@ kotlin {
     }
 }
 
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            from components.java
+            groupId 'io.oripwk'
+            artifactId 'micrometer-kotlin'
+            version '0.1.kotlin12'
+        }
+    }
+
+    repositories {
+        maven {
+            url  "https://ori.bintray.com/maven"
+            credentials {
+                username 'orip'
+                password '???'
+            }
+        }
+    }
+}
