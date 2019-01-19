@@ -67,7 +67,7 @@ fun Builder.coTimer(
     publishPercentiles: List<Double>? = null,
     percentilePrecision: Int? = null,
     publishPercentileHistogram: Boolean? = null,
-    sla: Duration? = null,
+    sla: List<Duration>? = null,
     minimumExpectedValue: Duration? = null,
     maximumExpectedValue: Duration? = null,
     distributionStatisticExpiry: Duration? = null,
@@ -80,7 +80,7 @@ fun Builder.coTimer(
                 .also { if (publishPercentiles != null) it.publishPercentiles(* publishPercentiles.toDoubleArray()) }
                 .percentilePrecision(percentilePrecision)
                 .publishPercentileHistogram(publishPercentileHistogram)
-                .sla(sla)
+                .also { if (sla != null) it.sla(* sla.toTypedArray()) }
                 .minimumExpectedValue(minimumExpectedValue)
                 .maximumExpectedValue(maximumExpectedValue)
                 .distributionStatisticExpiry(distributionStatisticExpiry)
