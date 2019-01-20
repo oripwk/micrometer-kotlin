@@ -36,11 +36,11 @@ The API is fully compatible with `Timer.builder(…)` API, leveraging Kotlin's d
 
 ```kotlin
 Timer
-        .builder("my-timer")
-        .coTimer(
-            meterRegistry = SimpleMeterRegistry(),
-            tags = listOf(Tag.of("env", "dev")),
-            maximumExpectedValue = Duration.ofSeconds(1)
-            // …
-        )
+    .builder("my-timer")
+    .coTimer(
+        meterRegistry = SimpleMeterRegistry(),
+        tags = listOf(Tag.of("env", "dev")),
+        maximumExpectedValue = Duration.ofSeconds(1)
+        // …
+    )
 ```
